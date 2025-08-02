@@ -18,7 +18,7 @@ jobs:
 
       - name: Construir imagem Docker
         run: |
-          docker build -t crm:backend -f backend/Dockerfile .
+          docker build -t crm:backend -f /backend/Dockerfile .
 
           
 
