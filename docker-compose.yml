@@ -1,0 +1,28 @@
+services:
+  postgres_db:
+    container_name: database
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    dns:
+      - 8.8.8.8
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      CRM:
+
+  backend-conteiner:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      CRM:
+
+volumes:
+  postgres_data:
+
+networks:
+  CRM:
