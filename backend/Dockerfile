@@ -8,7 +8,7 @@ COPY uv.lock .
 
 RUN pip install uv && uv sync
 
-COPY . .
+COPY backend .
 
 EXPOSE 5000
 
