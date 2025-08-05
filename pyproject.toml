@@ -1,11 +1,12 @@
 [project]
-name = "crm-project"
+name = "api_autenticacao"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.13"
+description = "API de autenticação de usuários para portfólio"
 dependencies = [
-    "argon2-cffi>=25.1.0",
-    "bcrypt>=4.3.0",
-    "flask>=3.1.1",
-    "psycopg2>=2.9.10",
+    "fastapi",
+    "uvicorn[standard]",
+    "passlib[bcrypt]",
+    "python-jose[cryptography]",
+    "SQLAlchemy",
+    "psycopg2-binary",
 ]
