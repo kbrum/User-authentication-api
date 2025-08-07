@@ -1,18 +1,29 @@
-from sqlalchemy import String, text
-from sqlalchemy.orm import declarative_base, Mapped, mapped_column
+from sqlalchemy import String, text, create_engine
+from sqlalchemy.orm import declarative_base, Mapped, mapped_column, sessionmaker
 from datetime import datetime
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # A base é a classe que os seus modelos vão herdar
 Base = declarative_base()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+engine = create_engine(DATABASE_URL, echo=True)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db_session():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 class Usuario(Base):
-    """
-    Modelo de dados para a tabela 'usuarios'.
-    """
+
     __tablename__ = 'usuarios'
 
     # Mapeamento das colunas da sua tabela
@@ -30,7 +41,4 @@ class Usuario(Base):
     )
 
     def __repr__(self) -> str:
-        """
-        Representação em string do objeto, útil para debug.
-        """
         return f"Usuario(id={self.id_usuario}, nome_usuario='{self.nome_usuario}')"

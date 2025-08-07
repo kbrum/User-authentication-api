@@ -10,6 +10,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       CRM:
+    env_file:
+      - .env
 
   backend-conteiner:
     container_name: backend
