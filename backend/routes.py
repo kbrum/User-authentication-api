@@ -6,7 +6,7 @@ from passlib.context import CryptContext
 import schemas
 import uvicorn
 
-# confi guração do hash de senhas
+# configuração do hash de senhas
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 app = FastAPI()
 
@@ -14,18 +14,19 @@ app = FastAPI()
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-@app.get("/home")
+@app.get("/") # home page da api para apresentação
 def root():
     return {"message": "Bem vindo a API de autenticação feita com kayky azevedo, Use /login, /cadastro, ou /showUser para interagir "}
 
 
-@app.get("/cadastro")
+@app.post("/cadastro") #endpoint de cadastro
 def cadastro(user: schemas.UserCreate, db: Session = Depends(get_db_session)):
     try:
-        hashed_password = get_password_hash(user.password)
+        hashed_password = get_password_hash(user.password) # faz o hash
         db_user = Usuario(nome_usuario=user.username,
                           nome_completo=user.full_name,
-                          hash_senha=hashed_password,)
+                          hash_senha=hashed_password,)  # a variavel db_user recebe a classe Usuario
+                                                        # que é usada na comunicação com o banco
         db.add(db_user)
         db.commit()
         db.refresh(db_user)
@@ -37,6 +38,9 @@ def cadastro(user: schemas.UserCreate, db: Session = Depends(get_db_session)):
             detail="Username already exists"
        )
 
+@app.post("/login")
+def login():
+    ...
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000)
