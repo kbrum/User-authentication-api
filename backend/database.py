@@ -27,16 +27,16 @@ class Usuario(Base):
     __tablename__ = 'usuarios'
 
     # Mapeamento das colunas da sua tabela
-    id_usuario: Mapped[int] = mapped_column(primary_key=True)
-    nome_completo: Mapped[str] = mapped_column(String(100))
-    nome_usuario: Mapped[str] = mapped_column(String(50), unique=True)
-    hash_senha: Mapped[str] = mapped_column(String(255))
-    setor: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    id_usuario: Mapped[int] = mapped_column(primary_key=True) #id de usuario e primary key
+    nome_completo: Mapped[str] = mapped_column(String(100)) # nome completo
+    nome_usuario: Mapped[str] = mapped_column(String(50), unique=True) # nome de usuario para login
+    hash_senha: Mapped[str] = mapped_column(String(255)) # senha ja com hash
+    setor: Mapped[str | None] = mapped_column(String(50), nullable=True) # setor (opcinal)
     criado_em: Mapped[datetime] = mapped_column(
-        server_default=text("CURRENT_TIMESTAMP")
+        server_default=text("CURRENT_TIMESTAMP") # quando foi criado
     )
     atualizado_em: Mapped[datetime] = mapped_column(
-        server_default=text("CURRENT_TIMESTAMP"),
+        server_default=text("CURRENT_TIMESTAMP"),  # quando foi modificado
         onupdate=text("CURRENT_TIMESTAMP")
     )
 
