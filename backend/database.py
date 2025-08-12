@@ -9,9 +9,9 @@ load_dotenv()
 # A base é a classe que os seus modelos vão herdar
 Base = declarative_base()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URI = os.getenv("DATABASE_URI")
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URI, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
