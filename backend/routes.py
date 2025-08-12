@@ -4,6 +4,7 @@ import uvicorn
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordRequestForm
 
 from auth_conf import get_password_hash, verify_password, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, \
     get_current_user
@@ -39,7 +40,7 @@ def cadastro(user: schemas.UserCreate, db: Session = Depends(get_db_session)):
 
 # rota de login
 @app.post("/login")
-def login_for_access_token(form_data: schemas.UserLogin, db: Session = Depends(get_db_session)):
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db_session)):
     # Buscar o usuário no banco de dados
     user = db.query(Usuario).filter(Usuario.nome_usuario == form_data.username).first()
 
